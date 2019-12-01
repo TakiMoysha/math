@@ -13,7 +13,7 @@ def getGaussVariable(mean, deviation):
         V += random.random()
     meanV = V-(n/2)
     deviationV = math.sqrt(12/n)
-    X = (deviation  * (deviationV * meanV)) + mean
+    X = (deviation*(deviationV*meanV))+mean
     return X
 
 
@@ -50,5 +50,4 @@ ax_2.grid(linestyle='--', alpha=0.5)
 columnSaturation, bins, _ = ax_1.hist(data, bins=k) # Кол-во элементов в каждом столбце, центры столбиков
 sns.distplot(data, bins=k, color="g", hist_kws={'alpha':.7}, kde_kws={'linewidth':3})
 print(columnSaturation)
-
 plt.show()
