@@ -40,7 +40,7 @@ s = 0 # Поправочный множитель
 
 data = getGaussArray(mean, deviation)
 # Построение графиков
-fig = plt.figure(figsize=(10,10), dpi= 80) # Размер окна 
+fig = plt.figure(figsize=(10,8), dpi= 80) # Размер окна 
 ax_1 = fig.add_subplot(2, 1, 2)
 ax_2 = fig.add_subplot(2, 1, 1)
 ax_1.set(title='Gaussian distribution')
