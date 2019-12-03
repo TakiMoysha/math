@@ -31,17 +31,39 @@ def getNeimanArray():
     return array
 
 
+M = (b-a)/2
+D = ((b-a)**2)/12
+C = 1/(b-a)
+
+def DM():
+    summaM = 0
+    for i in range(N):
+        summaM += data[i]
+    mathO = summaM/N
+
+    summaD = 0
+    for i in range(N):
+        summaD = (data[i]-mathO)
+    mathD = summaD/N
+    return mathO, mathD
+
+print('Математическое ожидание: %.4f\nДисперсия: %.4f' % (DM()[0], DM()[1]))
 
 data = getNeimanArray()
 # Построение графиков
-fig = plt.figure(figsize=(10,8), dpi= 80) # Размер окна 
-ax_1 = fig.add_subplot(2, 1, 2)
-ax_2 = fig.add_subplot(2, 1, 1)
-ax_1.set(title='Neiman distribution')
-ax_2.set(title='Distribution density')
-ax_1.grid(linestyle='--', alpha=0.5)
-ax_2.grid(linestyle='--', alpha=0.5)
-columnSaturation, bins, _ = ax_1.hist(data, bins=k) # Кол-во элементов в каждом столбце, центры столбиков
-sns.distplot(data, bins=k, color="g", hist_kws={'alpha':.7}, kde_kws={'linewidth':3})
-print(columnSaturation)
+# fig = plt.figure(figsize=(10,8), dpi= 80) # Размер окна
+# ax_1 = fig.add_subplot(2, 1, 2)
+# ax_2 = fig.add_subplot(2, 1, 1)
+# ax_1.set(title='Neiman distribution')
+# ax_2.set(title='Distribution density')
+# ax_1.grid(linestyle='--', alpha=0.5)
+# ax_2.grid(linestyle='--', alpha=0.5)
+# columnSaturation, bins, _ = ax_1.hist(data, bins=k) # Кол-во элементов в каждом столбце, центры столбиков
+# sns.distplot(data, bins=k, color="g", hist_kws={'alpha':.7}, kde_kws={'linewidth':3})
+# print(columnSaturation)
+# plt.show()
+
+plt.grid(linestyle='--', alpha=0.5)
+sns.distplot(data, bins=k, color="g", kde_kws={'linewidth':0.00001})
+plt.axhline(y=C)
 plt.show()
