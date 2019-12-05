@@ -45,21 +45,26 @@ print('Практическое значения:\n\tМатематическо�
 #построение гистограммы
 fig = plt.figure(figsize=(10, 8), dpi= 80) # Размер окна
 ax_1 = fig.add_subplot(2, 1, 1)
-ax_1.set(title='Распределение по Обратная ф-ции')
+ax_1.set(title='Распределение по Обратной ф-ции')
 ax_1.grid(linestyle='--', alpha=0.5)
 sns.distplot(XArray, bins=k, color="g", kde_kws={'linewidth':0.00001})
 ax_1.axhline(y=C)
 
-#Построение полигона накопленных частот
+#Построение полигона накопленных частот (frequency polygon)
 
 ax_2 = fig.add_subplot(2, 2, 1)
-columnSaturation, bins, _ = ax_2.hist(XArray, bins=k)
+columnSaturation, _, _ = ax_2.hist(XArray, bins=k)# columnSaturation - хранит кол-во точек в каждом столбце
 plt.delaxes(ax_2)# delete ax_2 from the figure
-
-array =[]
+arrayF_q=[] # Считаем выборочную вероятность (высоты столбцов)
 for i in range(k):
     F_q = columnSaturation[i]/N
-    array.append(F_q)
-
+    arrayF_q.append(F_q)
+print(columnSaturation, "\n", arrayF_q)
+# вывод гистограммы
+ax_2 = fig.add_subplot(212)
+ax_2.grid(linestyle='--', alpha=0.5)
+ax_2.set(title="Frequency polygon")
+plt.bar(columnSaturation, [arrayF_q[i] for i in range(len(arrayF_q))], 
+         color = 'blue', alpha = 0.7, zorder = 2)
 
 plt.show()
