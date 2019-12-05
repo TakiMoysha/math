@@ -2,85 +2,64 @@ import random
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-
-def getVarriable():
-    ksi = random.random()
-    f = lambda j: (b-a)*j+a
-    return f(ksi)
-
-def getArray():
+def selectionArray(N):
     list = []
     for i in range(N):
-        list.append(getVarriable())
+        list.append(random.random())
     return list
 
+
+a, b, N, k = 1, 6, 1000, 9
 
 # a = int(input("A:"))
 # b = int(input("B:"))
 # k = int(input("Bins:"))
 # N = int(input("Выборка:"))
-a, b, k = 5, 10, 9
-# M = (b-a)/2
-# D = ((b-a)**2)/12
+sel = selectionArray(N) # Это список рандомных кси
+
+def getXArray(selection, a, b):
+    res = []
+    for i in range(N):
+        fun = lambda ksi: (b-a)*ksi+a
+        res.append(fun(selection[i]))
+    return res
+
+def getD(array, M, a=0, b=0):
+    sum = 0
+    # Используется для проверки и отладки практических значений
+    teorD = (b-a)**2/12 #теоретическое значение дисперсии
+    teorM = (b+a)/2  #теоретическое значение мат ожидания
+    for i in range(len(array)):
+        sum += (array[i]-M)**2
+    res = sum/len(array)
+    return res, teorM, teorD
+
+
+XArray = getXArray(sel, a, b) # Это список Х_i сформированный  по рандомным кси
 C = 1/(b-a)
-N = 1000
-data = getArray() # f(ksi) 
+M = sum(XArray)/N # Математическое ожидание
+D, teorM, teorD = getD(XArray, M, a, b)
+print('Теоретические значения:\n\tМатематическое ожидание: %.2f\n\tДисперсия: %.2f' % (teorD, teorM))
+print('Практическое значения:\n\tМатематическое ожидание: %.8f\n\tДисперсия: %.8f' % (D, M))
 
-def getVarriableFun(x):
-    f = lambda x: (x-a)/(b-a)
-    return f(x)
+#построение гистограммы
+fig = plt.figure(figsize=(10, 8), dpi= 80) # Размер окна
+ax_1 = fig.add_subplot(2, 1, 1)
+ax_1.set(title='Распределение по Обратная ф-ции')
+ax_1.grid(linestyle='--', alpha=0.5)
+sns.distplot(XArray, bins=k, color="g", kde_kws={'linewidth':0.00001})
+ax_1.axhline(y=C)
 
-
-def getArrayFun():
-    list = []
-    for i in range(N):
-        list.append(getVarriableFun(data[i]))
-    return list
-
-
-def DM(arraylist):
-    summaM = 0
-    for i in range(N):
-        summaM += arraylist[i]
-    mathO = summaM/N
-    print("12:", mathO)
-
-    summaD = 0
-    for i in range(N):
-        summaD = (arraylist[i]-mathO)
-    mathD = summaD**2/N
-    print("12123:", mathD)
-    return mathO, mathD
-
-
-dataFun = getArrayFun()
-dm = DM(dataFun)
-print('Математическое ожидание: %.8f\nДисперсия: %.8f' % (dm[0], dm[1]))
-
-
-fig = plt.figure(figsize=(12, 10), dpi= 80) # Размер окна
-
-# ax_2 = fig.add_subplot(2, 2, 2)
-# ax_2.set(title='2')
-# ax_2.grid(linestyle='--', alpha=0.5)
-# columnSaturation, bins, _ = ax_2.hist(data, bins=k) # Для получения кол-ва точек в интервалах на гистограмме
+#Построение полигона накопленных частот
 
 ax_2 = fig.add_subplot(2, 2, 1)
-ax_2.set(title='1')
-ax_2.grid(linestyle='--', alpha=0.5)
-columnSaturation, bins, _ = ax_2.hist(dataFun, bins=k)
+columnSaturation, bins, _ = ax_2.hist(XArray, bins=k)
+plt.delaxes(ax_2)# delete ax_2 from the figure
 
 array =[]
-for i in range(8):
+for i in range(k):
     F_q = columnSaturation[i]/N
     array.append(F_q)
-# delete ax_2 from the figure
-plt.delaxes(ax_2)
 
-ax_1 = fig.add_subplot(1, 1, 1, sharex=ax_2)
-ax_1.set(title='3')
-ax_1.grid(linestyle='--', alpha=0.5)
-sns.distplot(data, bins=k, color="g", kde_kws={'linewidth':0.00001})
-ax_1.axhline(y=C)
 
 plt.show()
