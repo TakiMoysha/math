@@ -16,7 +16,6 @@ import matplotlib.pylab as plt
 #     return X
 
 
-
 # def getXArray(mean, deviation, N):
 # 	array = []
 # 	for i in range(N):
@@ -76,7 +75,7 @@ sns.distplot(XArray, bins=k, color="g", kde_kws={'linewidth':0.00001})
 # Построение полигона накопленных частот (frequency polygon)
 ax_2 = fig.add_subplot(2, 2, 1)
 columnSaturation, _, _ = ax_2.hist(XArray, bins=k)# columnSaturation - хранит кол-во точек в каждом столбце
-plt.delaxes(ax_2)# delete ax_2 from the figure
+plt.delaxes(ax_2)# Удаляет ax_2 из fig
 arrayF_q=[] # Считаем выборочную вероятность (высоты столбцов)
 for i in range(k):
     F_q = columnSaturation[i]/N
