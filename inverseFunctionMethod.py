@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -22,6 +24,7 @@ def getXArray(selection, a, b):
         fun = lambda ksi: (b-a)*ksi+a
         res.append(fun(selection[i]))
     return res
+
 
 def getD(data, M, a=0, b=0):
     sum = 0
@@ -57,13 +60,23 @@ arrayF_q=[] # Считаем выборочную вероятность (выс
 for i in range(k):
     F_q = columnSaturation[i]/N
     arrayF_q.append(F_q)
-print(columnSaturation, "\n", arrayF_q)
 # вывод гистограммы 
 ax_2 = fig.add_subplot(212)
 ax_2.grid(linestyle='--', alpha=0.5)
 ax_2.set(title="Frequency polygon")
-# plt.bar(x, y)
-plt.bar(columnSaturation, arrayF_q, 
+
+
+def getAxBar(data):
+    array = []
+    array.append(data[0])
+    for i in range(1, len(data)):
+        array.append(data[i]+array[i-1])
+    return array
+
+
+xBar = getAxBar(columnSaturation)
+yBar = getAxBar(arrayF_q)
+plt.bar(xBar, yBar,
          color = 'blue', alpha = 0.7, zorder = 2)
 
 plt.show()
