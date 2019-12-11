@@ -34,22 +34,14 @@ def getD(data, M):
     return res
 
 
-<<<<<<< HEAD
 a, b = 0, 9
-=======
-a, b = 0, 4
->>>>>>> 2f6f6f7f21786b6f248acdefabfe70e392826bba
 k=11
 sigma=1
 N=1000
 dataX = getData(a, b, N, sigma)
 
 teorM = (math.sqrt(math.pi*2)/2)*sigma # теоретическое значение мат ожидания
-<<<<<<< HEAD
 teorD = -(sigma**2)*((2-math.pi)/2) # теоретическое значение дисперсии
-=======
-teorD = (sigma**2)*((2-math.pi)/2) # теоретическое значение дисперсии
->>>>>>> 2f6f6f7f21786b6f248acdefabfe70e392826bba
 M = sum(dataX)/N
 D = getD(dataX, M)
 print('Теоретические значения:\n\tМатематическое ожидание: %.2f\n\tДисперсия: %.2f' % (teorM, teorD))
@@ -59,7 +51,6 @@ fig = plt.figure(figsize=(10, 6), dpi=90) # Размер окна
 ax_1 = fig.add_subplot(2, 1, 1)
 ax_1.set(title='Распределение method Neiman')
 plt.grid(linestyle='--', alpha=0.5)
-<<<<<<< HEAD
 
 # Построение на полигоне накопленных частот ф-ции плотности распределения
 xAx = np.arange(a, b, 0.01)
@@ -70,9 +61,6 @@ ax_1.plot(xAx, xAxfun)
 pylab.xlim(a-((b-a)/10), b+((b-a)/10))
 # pylab.ylim(0, 1)
 sns.distplot(dataX, bins=k, color="g", kde_kws={'linewidth':0.00001})
-=======
-sns.distplot(dataX, bins=k, color="g", kde_kws={'linewidth':1.00001}, hist_kws={'linewidth':1})
->>>>>>> 2f6f6f7f21786b6f248acdefabfe70e392826bba
 
 # Построение полигона накопленных частот (frequency polygon)
 ax_2 = fig.add_subplot(2, 2, 1)
@@ -94,7 +82,6 @@ def getAxBar(data):
     array = []
     array.append(data[0])
     for i in range(1, len(data)):
-<<<<<<< HEAD
         array.append((data[i]+array[i-1]))
     return array
 
@@ -108,12 +95,6 @@ ax_2.plot(xAx, xAxfun)
 pylab.xlim(a-((b-a)/10), b+((b-a)/10))
 # pylab.ylim(0, 1)
 
-=======
-        array.append(data[i]+array[i-1])
-    return array
-
-
->>>>>>> 2f6f6f7f21786b6f248acdefabfe70e392826bba
 xBar = getAxBar(columnSaturation)
 yBar = getAxBar(arrayF_q)
 plt.bar(xBar, yBar,

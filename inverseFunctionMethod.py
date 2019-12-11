@@ -70,7 +70,6 @@ ax_2.grid(linestyle='--', alpha=0.5)
 ax_2.set(title="Frequency polygon")
 
 
-<<<<<<< HEAD
 def getAxBar(data, i=0):
     array = []
     if i == 0:
@@ -91,15 +90,6 @@ for i in range(len(xAx)):
 ax_2.plot(xAx, yAx)
 # pylab.xlim(a-((b-a)/10), b+((b-a)/10))
 # pylab.ylim(0, 0.5)
-=======
-def getAxBar(data):
-    array = []
-    array.append(data[0])
-    for i in range(1, len(data)):
-        array.append(data[i]+array[i-1])
-    return array
-
->>>>>>> 2f6f6f7f21786b6f248acdefabfe70e392826bba
 
 xBar = getAxBar(columnSaturation)
 yBar = getAxBar(arrayF_q)
