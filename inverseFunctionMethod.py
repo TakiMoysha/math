@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import random
 import seaborn as sns
+import numpy as np
+import pylab
 import matplotlib.pyplot as plt
 
 def selectionArray(N):
@@ -9,7 +13,7 @@ def selectionArray(N):
     return list
 
 
-a, b, N, k = 1, 20, 1000, 9
+a, b, N, k = 0, 9, 1000, 9
 # a = int(input("A:"))
 # b = int(input("B:"))
 # k = int(input("Bins:"))
@@ -22,6 +26,7 @@ def getXArray(selection, a, b):
         fun = lambda ksi: (b-a)*ksi+a
         res.append(fun(selection[i]))
     return res
+
 
 def getD(data, M, a=0, b=0):
     sum = 0
@@ -46,8 +51,10 @@ fig = plt.figure(figsize=(10, 8), dpi= 80) # Размер окна
 ax_1 = fig.add_subplot(2, 1, 1)
 ax_1.set(title='Распределение по Обратной ф-ции')
 ax_1.grid(linestyle='--', alpha=0.5)
+
+# Построение гистограммы
 sns.distplot(XArray, bins=k, color="g", kde_kws={'linewidth':0.00001})
-ax_1.axhline(y=C)
+ax_1.hlines(y=C, xmin=a, xmax=b, color='b')
 
 # Построение полигона накопленных частот (frequency polygon)
 ax_2 = fig.add_subplot(2, 2, 1)
@@ -57,13 +64,36 @@ arrayF_q=[] # Считаем выборочную вероятность (выс
 for i in range(k):
     F_q = columnSaturation[i]/N
     arrayF_q.append(F_q)
-print(columnSaturation, "\n", arrayF_q)
 # вывод гистограммы 
 ax_2 = fig.add_subplot(212)
 ax_2.grid(linestyle='--', alpha=0.5)
 ax_2.set(title="Frequency polygon")
-# plt.bar(x, y)
-plt.bar(columnSaturation, arrayF_q, 
+
+
+def getAxBar(data, i=0):
+    array = []
+    if i == 0:
+        array.append(data[0])
+        for i in range(1, len(data)):
+            array.append(data[i]+array[i-1])
+    else:
+        array.append(data[0]*100)
+        for i in range(1, len(data)):
+            array.append((data[i]+array[i-1])*100)
+    return array
+
+# Построение на полигоне накопленных частот ф-ции плотности распределения
+xAx = np.arange(0, 1000, 1)
+yAx = []
+for i in range(len(xAx)): 
+    yAx.append((xAx[i]-a)/(b-a)/100)
+ax_2.plot(xAx, yAx)
+# pylab.xlim(a-((b-a)/10), b+((b-a)/10))
+# pylab.ylim(0, 0.5)
+
+xBar = getAxBar(columnSaturation)
+yBar = getAxBar(arrayF_q)
+plt.bar(xBar, yBar,
          color = 'blue', alpha = 0.7, zorder = 2)
 
 plt.show()
