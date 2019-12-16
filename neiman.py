@@ -35,7 +35,7 @@ def getD(data, M):
 
 
 a, b = 0, 9
-k=11
+k=9
 sigma=1
 N=1000
 dataX = getData(a, b, N, sigma)
@@ -53,7 +53,7 @@ ax_1.set(title='Распределение method Neiman')
 plt.grid(linestyle='--', alpha=0.5)
 
 # Построение на полигоне накопленных частот ф-ции плотности распределения
-xAx = np.arange(a, b, 0.01)
+xAx = np.arange(a, b, 0.1) # Изинив 3 аргумент изменяется гладкость ф-ции распределения
 xAxfun = []
 for i in range(len(xAx)): 
     xAxfun.append((xAx[i]/sigma**2)*math.exp(-(xAx[i]**2)/(2*(sigma**2))))
@@ -68,14 +68,12 @@ columnSaturation, _, _ = ax_2.hist(dataX, bins=k) # columnSaturation - хран�
 plt.delaxes(ax_2) # delete ax_2 from the figure
 arrayF_q=[] # Считаем выборочную вероятность (высоты столбцов)
 for i in range(k):
-    F_q = columnSaturation[i]/N
+    F_q = columnSaturation[i]/1000
     arrayF_q.append(F_q)
-# print(columnSaturation, "\n", arrayF_q)
 # вывод гистограммы 
 ax_2 = fig.add_subplot(212)
 ax_2.grid(linestyle='--', alpha=0.5)
 ax_2.set(title="Frequency polygon")
-# plt.bar(x, y)
 
 
 def getAxBar(data):
@@ -87,16 +85,19 @@ def getAxBar(data):
 
 
 # Построение на полигоне накопленных частот ф-ции плотности распределения
-xAx = np.arange(a, b, 0.1)
-xAxfun = []
+xAx = np.arange(0, N, 1)
+yAxfun = []
 for i in range(len(xAx)): 
-    xAxfun.append((1-math.exp(-(xAx[i]**2)/(2*sigma**2))))
-ax_2.plot(xAx, xAxfun)
-pylab.xlim(a-((b-a)/10), b+((b-a)/10))
+    yAxfun.append((1-math.exp(-(xAx[i]**2)/(200000*sigma**2))))
+    # yAxfun.append((1-math.exp(-(xAx[i]**2)/(2*sigma**2))))
+ax_2.plot(xAx, yAxfun)
+# pylab.xlim(a-((b-a)/10), b+((b-a)/10))
 # pylab.ylim(0, 1)
 
 xBar = getAxBar(columnSaturation)
 yBar = getAxBar(arrayF_q)
+print(xBar)
+print(yBar)
 plt.bar(xBar, yBar,
          color = 'blue', alpha = 0.5, zorder = 0.5)
 
