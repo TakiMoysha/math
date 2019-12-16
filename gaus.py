@@ -13,8 +13,8 @@ def getXArray(mean, deviation, N):
 
 
 mean = 0 # среднее значение
-deviation = 0.1 # среднеквадратичное отклонение sigma
-k = 21 # Кол-во интервалов
+deviation = 0.5 # среднеквадратичное отклонение sigma
+k = 11 # Кол-во интервалов
 s = 0 # Поправочный множитель
 N = 1500
 
@@ -45,12 +45,10 @@ ax_1.set(title='Распределение по гаусскому закону'
 plt.grid(linestyle='--', alpha=0.5)
 
 # Построение на полигоне накопленных частот ф-ции плотности распределения
-xAx = np.arange(-3, 3, 0.1)
+xAx = np.arange(-3, 3, 0.1) # Изинив 3 аргумент изменяется гладкость ф-ции распределения
 xAxfun = []
 for i in range(len(xAx)): 
     xAxfun.append((math.exp(-(xAx[i]**2)/(2*deviation**2)))*(1/(deviation*math.sqrt(math.pi*2))))
-    # xAxfun.append()
-    # xAxfun.append((1/(deviation*math.sqrt(2*math.pi)))*(math.exp(-(xAx[i]-mean)/(2*deviation**2))))
 ax_1.plot(xAx, xAxfun)
 sns.distplot(XArray, bins=k, color="g", kde_kws={'linewidth':0.00001})
 
@@ -76,15 +74,17 @@ def getAxBar(data):
         array.append(data[i]+array[i-1])
     return array
 
-# Построение на полигоне накопленных частот ф-ции плотности распределения
-xAx = np.arange(0, 1000, 1)
+# Построение на полигоне накопленных частот ф-ции Плотность вероятности
+xAx = np.arange(0, N, 0.1)
 yAx = []
 for i in range(len(xAx)): 
-    yAx.append((math.exp(-((xAx[i]-mean)**2/(2*deviation**2))))/100)
+    yAx.append(math.exp(-(xAx[i]-mean)**2/(2000000*deviation**2)))
+    # yAx.append((1/(deviation*math.sqrt(2*math.pi)))*math.exp(-(xAx[i]-mean)**2/(1000000*deviation**2)))
 ax_2.plot(xAx, yAx)
 
 xBar = getAxBar(columnSaturation)
 yBar = getAxBar(arrayF_q)
+
 plt.bar(xBar, yBar,
          color = 'blue', alpha = 0.7, zorder = 2)
 
