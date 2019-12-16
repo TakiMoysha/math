@@ -13,7 +13,7 @@ def selectionArray(N):
     return list
 
 
-a, b, N, k = 0, 9, 1000, 9
+a, b, N, k = 0, 9, 1000, 11
 # a = int(input("A:"))
 # b = int(input("B:"))
 # k = int(input("Bins:"))
@@ -72,21 +72,17 @@ ax_2.set(title="Frequency polygon")
 
 def getAxBar(data, i=0):
     array = []
-    if i == 0:
-        array.append(data[0])
-        for i in range(1, len(data)):
-            array.append(data[i]+array[i-1])
-    else:
-        array.append(data[0]*100)
-        for i in range(1, len(data)):
-            array.append((data[i]+array[i-1])*100)
+    array.append(data[0])
+    for i in range(1, len(data)):
+        array.append(data[i]+array[i-1])
     return array
 
 # Построение на полигоне накопленных частот ф-ции плотности распределения
 xAx = np.arange(0, 1000, 1)
 yAx = []
 for i in range(len(xAx)): 
-    yAx.append((xAx[i]-a)/(b-a)/100)
+    yAx.append((xAx[i]-a)/1000)
+    # yAx.append((xAx[i]-a)/(b-a)/100)
 ax_2.plot(xAx, yAx)
 # pylab.xlim(a-((b-a)/10), b+((b-a)/10))
 # pylab.ylim(0, 0.5)
