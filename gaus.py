@@ -78,8 +78,8 @@ def getAxBar(data):
 xAx = np.arange(0, N, 0.1)
 yAx = []
 for i in range(len(xAx)): 
-    yAx.append(math.exp(-(xAx[i]-mean)**2/(N**2*deviation**2)))
-    # yAx.append((1/(deviation*math.sqrt(2*math.pi)))*math.exp(-(xAx[i]-mean)**2/(1000000*deviation**2)))
+    # yAx.append(math.exp(-(xAx[i]-mean)**2/(N**2*deviation**2)))
+    yAx.append((1/(deviation*math.sqrt(2*math.pi)))*math.exp(-(xAx[i]-mean)**2/(N**2*deviation**2)))
 ax_2.plot(xAx, yAx)
 
 xBar = getAxBar(columnSaturation)
