@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import math
 import random
 import numpy as np
@@ -34,8 +32,8 @@ def getD(data, M, a=0, b=0, n=6):
 XArray = getXArray(mean, deviation, N)
 M = sum(XArray)/N
 D, teorM, teorD = getD(XArray, M)
-print('Теоретические значения:\n\tМатематическое ожидание: %.2f\n\tДисперсия: %.2f' % (teorM, teorD))
-print('Практическое значения:\n\tМатематическое ожидание: %.8f\n\tДисперсия: %.8f' % (M, D))
+# print('Теоретические значения:\n\tМатематическое ожидание: %.2f\n\tДисперсия: %.2f' % (teorM, teorD))
+# print('Практическое значения:\n\tМатематическое ожидание: %.8f\n\tДисперсия: %.8f' % (M, D))
 
 # Строим графики
 # Гистограмма распределения гаусса
@@ -45,9 +43,9 @@ ax_1.set(title='Распределение по гаусскому закону'
 plt.grid(linestyle='--', alpha=0.5)
 
 # Построение на полигоне накопленных частот ф-ции плотности распределения
-xAx = np.arange(-3, 3, 0.1) # Изинив 3 аргумент изменяется гладкость ф-ции распределения
+xAx = np.arange(-3, 3, 0.1) # Изменив 3 аргумент изменяется гладкость ф-ции распределения
 xAxfun = []
-for i in range(len(xAx)): 
+for i in range(len(xAx)):
     xAxfun.append((math.exp(-(xAx[i]**2)/(2*deviation**2)))*(1/(deviation*math.sqrt(math.pi*2))))
 ax_1.plot(xAx, xAxfun)
 sns.distplot(XArray, bins=k, color="g", kde_kws={'linewidth':0.00001})
@@ -61,7 +59,7 @@ for i in range(k):
     F_q = columnSaturation[i]/N
     arrayF_q.append(F_q)
 
-# вывод гистограммы 
+# вывод гистограммы
 ax_2 = fig.add_subplot(212)
 ax_2.grid(linestyle='--', alpha=0.5)
 ax_2.set(title="Frequency polygon")
@@ -77,15 +75,15 @@ def getAxBar(data):
 # Построение на полигоне накопленных частот ф-ции Плотность вероятности
 xAx = np.arange(0, N, 0.1)
 yAx = []
-for i in range(len(xAx)): 
-    # yAx.append(math.exp(-(xAx[i]-mean)**2/(N**2*deviation**2)))
-    yAx.append((1/(deviation*math.sqrt(2*math.pi)))*math.exp(-(xAx[i]-mean)**2/(N**2*deviation**2)))
+for i in range(len(xAx)):
+    yAx.append(1*(1+math.erf((xAx[i]-mean)**2/(4000*N*deviation**2)))-1)
+
 ax_2.plot(xAx, yAx)
 
 xBar = getAxBar(columnSaturation)
 yBar = getAxBar(arrayF_q)
 
 plt.bar(xBar, yBar,
-         color = 'blue', alpha = 0.7, zorder = 2)
+         color = 'blue', alpha = 0.7, zorder = 2, width=3)
 
 plt.show()
