@@ -18,9 +18,9 @@ def encrypt(key, msg):
     key = (key*math.ceil(lenghtMsg/len(key)))[:lenghtMsg]
     step = list()
     for i in key:
-      if ord(i) in range(1072, 1104):
+      if ord(i) in range(1072, 1104): # номера русского алфавита в кодировке
         step.append(ecryptIndexChar(i, 1072, 1104)-1071)
-      elif ord(i) in range(97, 123):
+      elif ord(i) in range(97, 123): # номера английского алфавита в кодировке
         step.append(ecryptIndexChar(i, 97, 123)-96)
     return step
 
@@ -29,7 +29,7 @@ def encrypt(key, msg):
   cryptMsg = list()
   
   for i, step in zip(msg, steps):
-    if ord(i) in range(1072, 1104, step):
+    if ord(i) in range(1072, 1104):
       cryptMsg.append(chr(ecryptIndexChar(i, 1072, 1104, step)))
     elif ord(i) in range(97, 123):
       cryptMsg.append(chr(ecryptIndexChar(i, 97, 123, step)))
