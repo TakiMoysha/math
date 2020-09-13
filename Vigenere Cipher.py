@@ -26,7 +26,6 @@ def encrypt(key, msg):
 
 
   steps = getSteps(key, len(msg))
-  print(steps)
   cryptMsg = list()
   
   for i, step in zip(msg, steps):
@@ -65,7 +64,6 @@ def decrypt(key, msg):
   
 
   steps = getSteps(key, len(msg))
-  print(steps)
   decryptMsg = list()
   
   for i, step in zip(msg, steps):
