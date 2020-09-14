@@ -4,9 +4,6 @@ message = input("Введите сообщение: ").lower()
 key = input("Введите ключ: ")
 
 def encrypt(key, msg):
-  """key - смещение \n msg - сообщение которое шифруется \
-    Каждый символ msg должен сместиться на key шагов вправо по алфавиту"""
-
   def ecryptIndexChar(char, startIndexChar, endIndexChar, step=0):
     charCrypt = ord(char) + step
     if charCrypt >= endIndexChar: 
@@ -18,9 +15,9 @@ def encrypt(key, msg):
     key = (key*math.ceil(lenghtMsg/len(key)))[:lenghtMsg]
     step = list()
     for i in key:
-      if ord(i) in range(1072, 1104): # номера русского алфавита в кодировке
+      if ord(i) in range(1072, 1104):
         step.append(ecryptIndexChar(i, 1072, 1104)-1071)
-      elif ord(i) in range(97, 123): # номера английского алфавита в кодировке
+      elif ord(i) in range(97, 123):
         step.append(ecryptIndexChar(i, 97, 123)-96)
     return step
 
@@ -29,13 +26,13 @@ def encrypt(key, msg):
   cryptMsg = list()
   
   for i, step in zip(msg, steps):
-    if ord(i) in range(1072, 1104): # Проверка - Это русский алфавит
+    if ord(i) in range(1072, 1104):
       cryptMsg.append(chr(ecryptIndexChar(i, 1072, 1104, step)))
-    elif ord(i) in range(97, 123): # Проверка - Это английский алфавит
+    elif ord(i) in range(97, 123):
       cryptMsg.append(chr(ecryptIndexChar(i, 97, 123, step)))
-    else: # Если это не алфавит, то записываем символ в таком же виде, как он и был
+    else:
       cryptMsg.append(i)
-  return ''.join(cryptMsg) # Это просто перевод списка в строку
+  return ''.join(cryptMsg)
 
 
 def decrypt(key, msg):
@@ -56,9 +53,9 @@ def decrypt(key, msg):
     key = (key*math.ceil(lenghtMsg/len(key)))[:lenghtMsg]
     step = list()
     for i in key:
-      if ord(i) in range(1072, 1104): # номера русского алфавита в кодировке
+      if ord(i) in range(1072, 1104):
         step.append(ecryptIndexChar(i, 1072, 1104)-1071)
-      elif ord(i) in range(97, 123): # номера английского алфавита в кодировке
+      elif ord(i) in range(97, 123):
         step.append(ecryptIndexChar(i, 97, 123)-96)
     return step
   
@@ -67,13 +64,13 @@ def decrypt(key, msg):
   decryptMsg = list()
   
   for i, step in zip(msg, steps):
-    if ord(i) in range(1072, 1104): # Проверка - Это русский алфавит
+    if ord(i) in range(1072, 1104):
       decryptMsg.append(chr(decryptIndexChar(i, 1072, 1104, step)))
-    elif ord(i) in range(97, 123): # Проверка - Это английский алфавит
+    elif ord(i) in range(97, 123):
       decryptMsg.append(chr(decryptIndexChar(i, 97, 123, step)))
-    else: # Если это не алфавит, то записываем символ в таком же виде, как он и был
+    else:
       decryptMsg.append(i)
-  return ''.join(decryptMsg) # Это просто перевод списка в строку
+  return ''.join(decryptMsg)
 
   
 crp = encrypt(key, message)
